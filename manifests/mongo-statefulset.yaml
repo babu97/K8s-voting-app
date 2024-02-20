@@ -32,6 +32,9 @@ spec:
       containers:
         - name: mongo
           image: mongo:4.2
+          volumeMounts:
+           - name: mongodb-persistent-storage-claim
+             mountPath: /data/db
           command:
             - "numactl"
             - "--interleave=all"
@@ -44,9 +47,6 @@ spec:
             - "rs0"
           ports:
             - containerPort: 27017
-          volumeMounts:
-            - name: mongodb-persistent-storage-claim
-              mountPath: /data/db
   volumeClaimTemplates:
     - metadata:
         name: mongodb-persistent-storage-claim
